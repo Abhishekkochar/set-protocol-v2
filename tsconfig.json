@@ -15,7 +15,7 @@
     "moduleResolution": "node",
     "paths": {
         "@utils/*": ["utils/*"],
-        "@typechain/*": ["typechain/*"]
+        "@typechain/*": ["typechain/*"],
     }
   },
   "include": [
@@ -23,7 +23,8 @@
     "./utils/**/*.ts",
     "./deploy/**/*.ts",
     "./typechain/**/*.ts",
-    "./tasks/**/*.ts"
+    "./tasks/**/*.ts",
+    "./ignition/**/*.ts"
   ],
   "files": [
     "hardhat.config.ts",
