@@ -21,8 +21,7 @@
     "./utils/**/*.ts",
     "./deploy/**/*.ts",
     "./typechain/**/*.ts",
-    "./tasks/**/*.ts",
-    "./ignition/**/*.ts"
+    "./tasks/**/*.ts"
   ],
   "files": [
     "hardhat.config.ts",

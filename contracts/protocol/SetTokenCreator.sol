@@ -19,6 +19,7 @@
 pragma solidity 0.6.10;
 pragma experimental "ABIEncoderV2";
 
+import "hardhat/console.sol";
 import { IController } from "../interfaces/IController.sol";
 import { SetToken } from "./SetToken.sol";
 import { AddressArrayUtils } from "../lib/AddressArrayUtils.sol";
@@ -99,7 +100,7 @@ contract SetTokenCreator {
             _name,
             _symbol
         );
-
+        console.log("Test: ", address(setToken));
         // Registers Set with controller
         controller.addSet(address(setToken));
 

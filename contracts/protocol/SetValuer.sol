@@ -29,6 +29,7 @@ import { IPriceOracle } from "../interfaces/IPriceOracle.sol";
 import { PreciseUnitMath } from "../lib/PreciseUnitMath.sol";
 import { Position } from "./lib/Position.sol";
 import { ResourceIdentifier } from "./lib/ResourceIdentifier.sol";
+import "hardhat/console.sol";
 
 
 /**
@@ -81,16 +82,18 @@ contract SetValuer {
      * @return                 SetToken valuation in terms of quote asset in precise units 1e18
      */
     function calculateSetTokenValuation(ISetToken _setToken, address _quoteAsset) external view returns (uint256) {
+        console.log("Test");
         IPriceOracle priceOracle = controller.getPriceOracle();
         address masterQuoteAsset = priceOracle.masterQuoteAsset();
         address[] memory components = _setToken.getComponents();
+        console.log("Test 1");
         int256 valuation;
 
         for (uint256 i = 0; i < components.length; i++) {
             address component = components[i];
             // Get component price from price oracle. If price does not exist, revert.
             uint256 componentPrice = priceOracle.getPrice(component, masterQuoteAsset);
-
+            console.log(componentPrice);
             int256 aggregateUnits = _setToken.getTotalComponentRealUnits(component);
 
             // Normalize each position unit to preciseUnits 1e18 and cast to signed int
@@ -101,12 +104,12 @@ contract SetValuer {
             // Calculate valuation of the component. Debt positions are effectively subtracted
             valuation = normalizedUnits.preciseMul(componentPrice.toInt256()).add(valuation);
         }
-
+        console.log("Test 2");
         if (masterQuoteAsset != _quoteAsset) {
             uint256 quoteToMaster = priceOracle.getPrice(_quoteAsset, masterQuoteAsset);
             valuation = valuation.preciseDiv(quoteToMaster.toInt256());
         }
-
+        console.log("Test 3");
         return valuation.toUint256();
     }
 }

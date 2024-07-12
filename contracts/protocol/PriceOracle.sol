@@ -26,6 +26,7 @@ import { IController } from "../interfaces/IController.sol";
 import { IOracle } from "../interfaces/IOracle.sol";
 import { IOracleAdapter } from "../interfaces/IOracleAdapter.sol";
 import { PreciseUnitMath } from "../lib/PreciseUnitMath.sol";
+import "hardhat/console.sol";
 
 
 /**
@@ -115,24 +116,25 @@ contract PriceOracle is Ownable {
      * @return                  Price of asset pair to 18 decimals of precision
      */
     function getPrice(address _assetOne, address _assetTwo) external view returns (uint256) {
+        console.log("Price Oracle Test 1");
         require(
             controller.isSystemContract(msg.sender),
             "PriceOracle.getPrice: Caller must be system contract."
         );
-
+        console.log("Price Oracle Test 2");
         bool priceFound;
         uint256 price;
 
         (priceFound, price) = _getDirectOrInversePrice(_assetOne, _assetTwo);
-
+        console.log("Price Oracle Test 3");
         if (!priceFound) {
             (priceFound, price) = _getPriceFromMasterQuote(_assetOne, _assetTwo);
         }
-
+        console.log("Price Oracle Test 4");
         if (!priceFound) {
             (priceFound, price) = _getPriceFromAdapters(_assetOne, _assetTwo);
         }
-
+        console.log("Price Oracle Test 5");
         require(priceFound, "PriceOracle.getPrice: Price not found.");
 
         return price;

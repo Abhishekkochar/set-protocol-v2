@@ -95,12 +95,10 @@ contract BasicIssuanceModule is ModuleBase, ReentrancyGuard {
         require(_quantity > 0, "Issue quantity must be > 0");
 
         address hookContract = _callPreIssueHooks(_setToken, _quantity, msg.sender, _to);
-
         (
             address[] memory components,
             uint256[] memory componentQuantities
         ) = getRequiredComponentUnitsForIssue(_setToken, _quantity);
-
         // For each position, transfer the required underlying to the SetToken
         for (uint256 i = 0; i < components.length; i++) {
             // Transfer the component to the SetToken
@@ -114,7 +112,6 @@ contract BasicIssuanceModule is ModuleBase, ReentrancyGuard {
 
         // Mint the SetToken
         _setToken.mint(_to, _quantity);
-
         emit SetTokenIssued(address(_setToken), msg.sender, _to, hookContract, _quantity);
     }
 
