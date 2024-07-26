@@ -12,15 +12,9 @@ import "solidity-coverage";
 import "./tasks";
 
 const forkingConfig = {
-  url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_TOKEN}`,
-  blockNumber: 14792479,
+  url: `https://eth-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_TOKEN}`,
+  blockNumber: 6378120,
 };
-
-const mochaConfig = {
-  grep: "@forked-mainnet",
-  invert: (process.env.FORK) ? false : true,
-  timeout: (process.env.FORK) ? 100000 : 40000,
-} as Mocha.MochaOptions;
 
 checkForkedProviderEnvironment();
 
@@ -51,32 +45,17 @@ const config: HardhatUserConfig = {
       blockGasLimit: 12000000
     },
     localhost: {
-      url: "http://[::1]:8545",
+      url: "http://127.0.0.1:8545/",
       forking: (process.env.FORK) ? forkingConfig : undefined,
       timeout: 200000,
       gas: 12000000,
       blockGasLimit: 12000000
     },
-    // kovan: {
-    //   url: "https://kovan.infura.io/v3/" + process.env.INFURA_TOKEN,
+    // sepolia: {
+    //   url: `https://eth-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_TOKEN}`,
     //   // @ts-ignore
-    //   accounts: [`0x${process.env.KOVAN_DEPLOY_PRIVATE_KEY}`],
+    //   accounts: [`0x${process.env.DEPLOY_PRIVATE_KEY}`],
     // },
-    // staging_mainnet: {
-    //   url: "https://mainnet.infura.io/v3/" + process.env.INFURA_TOKEN,
-    //   // @ts-ignore
-    //   accounts: [`0x${process.env.STAGING_MAINNET_DEPLOY_PRIVATE_KEY}`],
-    // },
-    // production: {
-    //   url: "https://mainnet.infura.io/v3/" + process.env.INFURA_TOKEN,
-    //   // @ts-ignore
-    //   accounts: [`0x${process.env.PRODUCTION_MAINNET_DEPLOY_PRIVATE_KEY}`],
-    // },
-    // To update coverage network configuration got o .solcover.js and update param in providerOptions field
-    coverage: {
-      url: "http://127.0.0.1:8555", // Coverage launches its own ganache-cli client
-      timeout: 200000,
-    },
   },
   // @ts-ignore
   typechain: {
@@ -88,8 +67,6 @@ const config: HardhatUserConfig = {
   contractSizer: {
     runOnCompile: false,
   },
-
-  mocha: mochaConfig,
 
   // These are external artifacts we don't compile but would like to improve
   // test performance for by hardcoding the gas into the abi at runtime

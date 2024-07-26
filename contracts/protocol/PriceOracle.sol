@@ -124,7 +124,7 @@ contract PriceOracle is Ownable {
         console.log("Price Oracle Test 2");
         bool priceFound;
         uint256 price;
-
+        console.log("Price Oracle Test 2.5");
         (priceFound, price) = _getDirectOrInversePrice(_assetOne, _assetTwo);
         console.log("Price Oracle Test 3");
         if (!priceFound) {
@@ -261,13 +261,15 @@ contract PriceOracle is Ownable {
         returns (bool, uint256)
     {
         IOracle directOracle = oracles[_assetOne][_assetTwo];
+        console.logAddress( address(directOracle));
         bool hasDirectOracle = address(directOracle) != address(0);
-
+        console.log("Direct price 1");
         // Check asset1 -> asset 2. If exists, then return value
         if (hasDirectOracle) {
+            console.log("Direct price 2");
             return (true, directOracle.read());
         }
-
+        console.log("Direct price 3");
         IOracle inverseOracle = oracles[_assetTwo][_assetOne];
         bool hasInverseOracle = address(inverseOracle) != address(0);
 

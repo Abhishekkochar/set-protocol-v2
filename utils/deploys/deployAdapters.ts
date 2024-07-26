@@ -28,6 +28,7 @@ import {
   CompoundBravoGovernanceAdapter,
   CompClaimAdapter,
   RgtMigrationWrapAdapter,
+  ChainlinkOracleAdapter,
 } from "../contracts";
 import { Address, Bytes } from "./../types";
 
@@ -58,12 +59,19 @@ import { SynthetixExchangeAdapter__factory } from "../../typechain/factories/Syn
 import { CompoundBravoGovernanceAdapter__factory } from "../../typechain/factories/CompoundBravoGovernanceAdapter__factory";
 import { CompClaimAdapter__factory } from "../../typechain";
 import { RgtMigrationWrapAdapter__factory } from "../../typechain/factories/RgtMigrationWrapAdapter__factory";
+import { ChainlinkOracleAdapter__factory } from "../../typechain/factories/ChainlinkOracleAdapter__factory";
 
 export default class DeployAdapters {
   private _deployerSigner: Signer;
 
   constructor(deployerSigner: Signer) {
     this._deployerSigner = deployerSigner;
+  }
+
+  public async deployChainlinkOrcaleAdapter(
+    ChainlinkOracle: Address,
+  ): Promise<ChainlinkOracleAdapter> {
+    return await new ChainlinkOracleAdapter__factory(this._deployerSigner).deploy(ChainlinkOracle);
   }
 
   public async deployKyberExchangeAdapter(
